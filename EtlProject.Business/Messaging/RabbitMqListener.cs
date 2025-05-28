@@ -12,19 +12,20 @@ public class RabbitMqListener : IDisposable
 {
     private readonly ILogger<RabbitMqListener> _logger;
     private readonly IServiceProvider _services;
+    private readonly ConnectionFactory _factory;
     private IConnection? _connection;
     private IModel? _channel;
 
-    public RabbitMqListener(ILogger<RabbitMqListener> logger, IServiceProvider services)
+    public RabbitMqListener(ILogger<RabbitMqListener> logger, IServiceProvider services, ConnectionFactory factory)
     {
         _logger = logger;
         _services = services;
+        _factory = factory;
     }
 
     public void StartListening(string queueName)
     {
-        var factory = new ConnectionFactory { HostName = "localhost" };
-        _connection = factory.CreateConnection();
+        _connection = _factory.CreateConnection();
         _channel = _connection.CreateModel();
 
         _channel.QueueDeclare(queue: queueName, durable: true, exclusive: false, autoDelete: false);

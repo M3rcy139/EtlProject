@@ -10,6 +10,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EtlProject.DataAccess", "Et
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EtlProject.Migrations", "EtlProject.Migrations\EtlProject.Migrations.csproj", "{F65445E4-4AB4-4E7F-A768-BB310ADE03A0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EtlProject.Tests", "EtlProject.Tests\EtlProject.Tests.csproj", "{C5058971-8E4C-4DA0-B4A2-66C0889DB57F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -36,5 +38,9 @@ Global
 		{F65445E4-4AB4-4E7F-A768-BB310ADE03A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F65445E4-4AB4-4E7F-A768-BB310ADE03A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F65445E4-4AB4-4E7F-A768-BB310ADE03A0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C5058971-8E4C-4DA0-B4A2-66C0889DB57F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C5058971-8E4C-4DA0-B4A2-66C0889DB57F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C5058971-8E4C-4DA0-B4A2-66C0889DB57F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C5058971-8E4C-4DA0-B4A2-66C0889DB57F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

@@ -15,8 +15,6 @@ try
 
     services.AddDbServices(configuration);
     
-    services.AddControllersAndSwagger();
-    
     services.AddMappers();
     services.AddSenders();
     services.AddHttpClient();
@@ -27,8 +25,6 @@ try
     services.AddHostedService<RabbitMqWorker>();
 
     var app = builder.Build();
-    
-    app.ConfigureMiddleware(builder.Environment);
 
     app.Run();
 }

@@ -17,10 +17,10 @@ public class XmlSender
 
     public async Task SendAsync(string xml)
     {
-        var client = _httpClientFactory.CreateClient();
+        var client = _httpClientFactory.CreateClient("XmlSenderClient");
         var content = new StringContent(xml, Encoding.UTF8, "text/xml");
 
-        var response = await client.PostAsync("https://localhost:7057/api/v1/invoice", content);
+        var response = await client.PostAsync("https://somesite/api/v1/invoice", content);
 
         if (!response.IsSuccessStatusCode)
         {

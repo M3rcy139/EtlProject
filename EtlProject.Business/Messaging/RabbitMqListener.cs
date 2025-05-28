@@ -29,8 +29,27 @@ public class RabbitMqListener : IDisposable
 
         _channel.QueueDeclare(queue: queueName, durable: true, exclusive: false, autoDelete: false);
 
+        StartConsumer(queueName);
+        
+        _logger.LogInformation(InfoMessages.StartedListeningToQueue, queueName);
+    }
+    
+    private void StartConsumer(string queueName)
+    {
+        if (_channel == null) return;
+
         var consumer = new EventingBasicConsumer(_channel);
-        consumer.Received += async (model, ea) =>
+        consumer.Received += OnMessageReceived;
+        
+        _channel.BasicConsume(
+            queue: queueName,
+            autoAck: true,
+            consumer: consumer);
+    }
+    
+    private async void OnMessageReceived(object? model, BasicDeliverEventArgs ea)
+    {
+        try
         {
             var body = ea.Body.ToArray();
             var json = Encoding.UTF8.GetString(body);
@@ -39,10 +58,11 @@ public class RabbitMqListener : IDisposable
             using var scope = _services.CreateScope();
             var processor = scope.ServiceProvider.GetRequiredService<IInvoiceProcessingService>();
             await processor.ProcessMessageAsync(json);
-        };
-
-        _channel.BasicConsume(queue: queueName, autoAck: true, consumer: consumer);
-        _logger.LogInformation(InfoMessages.StartedListeningToQueue, queueName);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, ErrorMessages.ErrorMessageFromRabbitMq);
+        }
     }
     
     public void Dispose()

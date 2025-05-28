@@ -8,4 +8,5 @@ public static class ErrorMessages
     public const string MissingCreditAccount = "Missing credit account";
     public const string MissingDebitAgreementNumber = "Missing debit agreementNumber";
     public const string MissingCreditAgreementNumber = "Missing credit agreementNumber";
+    public const string ErrorMessageFromRabbitMq = "Error processing message from RabbitMQ";
 }

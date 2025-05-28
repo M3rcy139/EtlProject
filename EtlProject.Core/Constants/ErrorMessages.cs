@@ -2,9 +2,10 @@ namespace EtlProject.Core.Constants;
 
 public static class ErrorMessages
 {
-    public const string ArgumentativeException = "An argumentative exception: {0}";
-    public const string InvalidOperationException = "An invalid operation exception: {0}";
-
-    public const string UnexpectedErrorWithMessage = "Unexpected error: {0}";
     public const string ErrorProcessing = "Error processing message";
+    public const string MissingRequestId = "Missing request.id";
+    public const string MissingDebitAccount = "Missing debit account";
+    public const string MissingCreditAccount = "Missing credit account";
+    public const string MissingDebitAgreementNumber = "Missing debit agreementNumber";
+    public const string MissingCreditAgreementNumber = "Missing credit agreementNumber";
 }

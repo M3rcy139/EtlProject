@@ -1,5 +1,6 @@
 using System.Text;
 using EtlProject.Business.Interfaces;
+using EtlProject.Core.Constants;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using RabbitMQ.Client;
@@ -33,7 +34,7 @@ public class RabbitMqListener : IDisposable
         {
             var body = ea.Body.ToArray();
             var json = Encoding.UTF8.GetString(body);
-            _logger.LogInformation("[x] Received message: {Json}", json);
+            _logger.LogInformation(InfoMessages.ReceivedMessage, json);
 
             using var scope = _services.CreateScope();
             var processor = scope.ServiceProvider.GetRequiredService<IInvoiceProcessingService>();
@@ -41,7 +42,7 @@ public class RabbitMqListener : IDisposable
         };
 
         _channel.BasicConsume(queue: queueName, autoAck: true, consumer: consumer);
-        _logger.LogInformation("Started listening to queue: {Queue}", queueName);
+        _logger.LogInformation(InfoMessages.StartedListeningToQueue, queueName);
     }
     
     public void Dispose()

@@ -7,4 +7,6 @@ public record InvoiceRequest(
     decimal Amount,
     string Currency,
     string Details,
-    string? Pack);
+    Dictionary<string, string> Attributes,
+    string DebitAgreementNumber,
+    string CreditAgreementNumber);

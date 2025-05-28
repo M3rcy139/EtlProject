@@ -1,4 +1,5 @@
 using System.Text;
+using EtlProject.Core.Constants;
 using Microsoft.Extensions.Logging;
 
 namespace EtlProject.Business.External.Senders;
@@ -19,14 +20,14 @@ public class XmlSender
         var client = _httpClientFactory.CreateClient();
         var content = new StringContent(xml, Encoding.UTF8, "text/xml");
 
-        var response = await client.PostAsync("https://somesite/api/v1/invoice", content);
+        var response = await client.PostAsync("https://localhost:7057/api/v1/invoice", content);
 
         if (!response.IsSuccessStatusCode)
         {
             var error = await response.Content.ReadAsStringAsync();
-            throw new Exception($"HTTP {response.StatusCode}: {error}");
+            throw new HttpRequestException($"HTTP {response.StatusCode}: {error}");
         }
 
-        _logger.LogInformation("Sent XML successfully");
+        _logger.LogInformation(InfoMessages.SentXmlSuccessfully);
     }
 }

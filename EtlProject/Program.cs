@@ -18,6 +18,7 @@ try
     services.AddMappers();
     services.AddSenders();
     services.AddHttpClient();
+    services.AddSettings(configuration);
     
     services.AddServices();
     services.AddRepositories();

@@ -6,7 +6,7 @@ namespace EtlProject.Business.Builders;
 
 public class XmlBuilder
 {
-    public string BuildXml(InvoiceRequest invoice)
+    public string BuildInvoiceXml(InvoiceRequest invoice)
     {
         var elements = new List<XElement>
         {

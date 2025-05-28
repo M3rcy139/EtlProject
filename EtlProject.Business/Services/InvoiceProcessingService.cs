@@ -42,7 +42,7 @@ public class InvoiceProcessingService : IInvoiceProcessingService
         try
         {
             var xml = BuildXml(json);
-            await _sender.SendAsync(xml);
+            await _sender.SendAsync(xml, "Test");
             
             await _logRepo.UpdateLogStatusAsync(processingLog, ProcessingStatus.Sent);
         }
@@ -84,6 +84,6 @@ public class InvoiceProcessingService : IInvoiceProcessingService
     private string BuildXml(string json)
     {
         var invoice = _mapper.Map(json);
-        return _xmlBuilder.BuildXml(invoice);
+        return _xmlBuilder.BuildInvoiceXml(invoice);
     }
 }

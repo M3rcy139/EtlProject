@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("EtlProject.Migrations")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+8ec2d88cae22383331398f84593748f587ca1fe8")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+9ae0bc7921f681d57fb55446819453b859994c3c")]
 [assembly: System.Reflection.AssemblyProductAttribute("EtlProject.Migrations")]
 [assembly: System.Reflection.AssemblyTitleAttribute("EtlProject.Migrations")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

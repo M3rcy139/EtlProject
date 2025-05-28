@@ -21,18 +21,12 @@ public class InvoiceJsonMapper
         var creditAccount = credit["accountNumber"]?.GetValue<string>()
                             ?? throw new ArgumentException(ErrorMessages.MissingCreditAccount);
 
-        var debitAgreement = debit["agreementNumber"]?.GetValue<string>()
-                             ?? throw new ArgumentException(ErrorMessages.MissingDebitAgreementNumber);
-        var creditAgreement = credit["agreementNumber"]?.GetValue<string>()
-                              ?? throw new ArgumentException(ErrorMessages.MissingCreditAgreementNumber);
-
         var amount = debit["amount"]?.GetValue<decimal>() ?? 0;
         var currency = debit["currency"]?.GetValue<string>() ?? "";
         var details = node["details"]?.GetValue<string>() ?? "";
 
         var attributes = node.ToAttributeDictionary();
 
-        return new InvoiceRequest(id, debitAccount, creditAccount, amount, currency, details, attributes, 
-            debitAgreement, creditAgreement);
+        return new InvoiceRequest(id, debitAccount, creditAccount, amount, currency, details, attributes);
     }
 }

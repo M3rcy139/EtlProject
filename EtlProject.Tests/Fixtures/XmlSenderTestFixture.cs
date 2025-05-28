@@ -1,6 +1,8 @@
 using System.Net;
 using EtlProject.Business.External.Senders;
+using EtlProject.Business.Settings;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using Moq;
 using Moq.Protected;
 
@@ -12,6 +14,10 @@ public class XmlSenderTestFixture
     public Mock<IHttpClientFactory> FactoryMock { get; }
     public Mock<ILogger<XmlSender>> LoggerMock { get; }
     public XmlSender Sender { get; }
+    
+    public readonly string TestEndpointKey = "Invoice";
+    private const string TestEndpointUrl = "https://test-endpoint/api";
+    private const string HttpClientName = "XmlSenderClient";
 
     public XmlSenderTestFixture()
     {
@@ -19,11 +25,20 @@ public class XmlSenderTestFixture
         var httpClient = new HttpClient(HandlerMock.Object);
         
         FactoryMock = new Mock<IHttpClientFactory>();
-        FactoryMock.Setup(f => f.CreateClient("XmlSenderClient")).Returns(httpClient);
+        FactoryMock.Setup(f => f.CreateClient(HttpClientName)).Returns(httpClient);
 
         LoggerMock = new Mock<ILogger<XmlSender>>();
 
-        Sender = new XmlSender(FactoryMock.Object, LoggerMock.Object);
+        var options = Options.Create(new XmlSenderSettings
+        {
+            HttpClientName = HttpClientName,
+            Endpoints = new Dictionary<string, string>
+            {
+                { TestEndpointKey, TestEndpointUrl }
+            }
+        });
+
+        Sender = new XmlSender(FactoryMock.Object, LoggerMock.Object, options);
     }
 
     public void SetupHttpResponse(HttpStatusCode statusCode, string content)

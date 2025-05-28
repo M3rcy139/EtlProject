@@ -1,5 +1,4 @@
 using EtlProject.Business.Messaging;
-using EtlProject.Business.Services;
 
 namespace EtlProject.BackgroundServices;
 

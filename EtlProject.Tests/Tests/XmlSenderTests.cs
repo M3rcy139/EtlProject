@@ -24,7 +24,7 @@ public class XmlSenderTests
         _fixture.SetupHttpResponse(HttpStatusCode.OK, "<result>ok</result>");
 
         // Act
-        await _fixture.Sender.SendAsync("<xml></xml>");
+        await _fixture.Sender.SendAsync("<xml></xml>", _fixture.TestEndpointKey);
 
         // Assert
         _fixture.VerifyLogInformationContains(InfoMessages.SentXmlSuccessfully, Times.Once());
@@ -37,7 +37,20 @@ public class XmlSenderTests
         _fixture.SetupHttpResponse(HttpStatusCode.BadRequest, "Bad Request");
 
         // Act & Assert
-        var ex = await Assert.ThrowsAsync<HttpRequestException>(() => _fixture.Sender.SendAsync("<xml></xml>"));
+        var ex = await Assert.ThrowsAsync<HttpRequestException>(() => _fixture.Sender.SendAsync("<xml></xml>", _fixture.TestEndpointKey));
         Assert.Contains("HTTP BadRequest", ex.Message);
+    }
+    
+    [Fact]
+    public async Task SendAsync_Should_Throw_On_Missing_Endpoint_Key()
+    {
+        // Arrange
+        var unknownKey = "Unknown Key";
+        
+        // Act & Assert
+        var ex = await Assert.ThrowsAsync<ArgumentException>(() =>
+            _fixture.Sender.SendAsync("<xml></xml>", unknownKey));
+
+        Assert.Contains(string.Format(ErrorMessages.EndpointNotFound, unknownKey), ex.Message);
     }
 }

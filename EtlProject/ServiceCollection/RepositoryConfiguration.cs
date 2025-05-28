@@ -5,8 +5,9 @@ namespace EtlProject.ServiceCollection;
 
 public static class RepositoryConfiguration
 {
-    public static void AddRepositoryConfiguration(this IServiceCollection services)
+    public static void AddRepositories(this IServiceCollection services)
     {
-        services.AddSingleton<IProcessingLogRepository, ProcessingLogRepository>();
+        services.AddScoped<IProcessingLogRepository, ProcessingLogRepository>();
+        services.AddScoped<IJsonMessageRepository, JsonMessageRepository>();
     }
 }

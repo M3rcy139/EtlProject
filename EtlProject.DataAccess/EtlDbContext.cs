@@ -7,10 +7,11 @@ public class EtlDbContext : DbContext
 {
     public EtlDbContext(DbContextOptions<EtlDbContext> options) : base(options) { }
     
+    public DbSet<JsonMessage> JsonMessages { get; set; }
     public DbSet<ProcessingLog> ProcessingLogs { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<ProcessingLog>().Property(p => p.Status).HasConversion<int>();
+        modelBuilder.ApplyConfigurationsFromAssembly(typeof(EtlDbContext).Assembly);
     }
 }

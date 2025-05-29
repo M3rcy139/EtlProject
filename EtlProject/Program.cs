@@ -1,25 +1,40 @@
+using EtlProject.BackgroundServices;
+using EtlProject.ServiceCollection;
+using Serilog;
+
 var builder = WebApplication.CreateBuilder(args);
+var services = builder.Services;
+var configuration = builder.Configuration;
 
-// Add services to the container.
+builder.Host.ConfigureLogging(configuration);
 
-builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-
-var app = builder.Build();
-
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+try
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    Log.Information("Initializing the application.");
+
+
+    services.AddDbServices(configuration);
+    
+    services.AddMappers();
+    services.AddSenders();
+    services.AddHttpClient();
+    services.AddSettings(configuration);
+    
+    services.AddServices();
+    services.AddRepositories();
+
+    services.AddHostedService<RabbitMqWorker>();
+
+    var app = builder.Build();
+
+    app.Run();
 }
-
-app.UseHttpsRedirection();
-
-app.UseAuthorization();
-
-app.MapControllers();
-
-app.Run();
+catch (Exception ex)
+{
+    Log.Fatal(ex, "The application is stopped due to an exception.");
+    throw;
+}
+finally
+{
+    Log.CloseAndFlush();
+}

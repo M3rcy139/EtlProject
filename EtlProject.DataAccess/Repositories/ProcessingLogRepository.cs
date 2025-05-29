@@ -13,38 +13,18 @@ public class ProcessingLogRepository : IProcessingLogRepository
         _context = context;
     }
 
-    public async Task<int> LogReceivedAsync(string json)
+    public async Task<Guid> AddProcessingLogAsync(ProcessingLog processingLog)
     {
-        var log = new ProcessingLog
-        {
-            ReceivedAt = DateTime.UtcNow,
-            RawJson = json,
-            Status = ProcessingStatus.Received
-        };
-
-        _context.ProcessingLogs.Add(log);
+        await _context.ProcessingLogs.AddAsync(processingLog);
         await _context.SaveChangesAsync();
-        return log.Id;
+        
+        return processingLog.Id;
     }
-
-    public async Task LogSuccessAsync(int id)
+    
+    public async Task UpdateLogStatusAsync(ProcessingLog processingLog, ProcessingStatus status, string? error = null)
     {
-        var log = await _context.ProcessingLogs.FindAsync(id);
-        if (log != null)
-        {
-            log.Status = ProcessingStatus.Sent;
-            await _context.SaveChangesAsync();
-        }
-    }
-
-    public async Task LogFailureAsync(int id, string error)
-    {
-        var log = await _context.ProcessingLogs.FindAsync(id);
-        if (log != null)
-        {
-            log.Status = ProcessingStatus.Failed;
-            log.ErrorMessage = error;
-            await _context.SaveChangesAsync();
-        }
+        processingLog.Status = status;
+        processingLog.ErrorMessage = error;
+        await _context.SaveChangesAsync();
     }
 }

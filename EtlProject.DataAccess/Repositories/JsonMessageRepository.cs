@@ -12,7 +12,7 @@ public class JsonMessageRepository : IJsonMessageRepository
         _context = context;
     }
     
-    public async Task AddJsonMessage(JsonMessage jsonMessage)
+    public async Task AddJsonMessageAsync(JsonMessage jsonMessage)
     {
         await _context.JsonMessages.AddAsync(jsonMessage);
         await _context.SaveChangesAsync();

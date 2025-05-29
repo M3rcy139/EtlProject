@@ -4,5 +4,5 @@ namespace EtlProject.DataAccess.Interfaces;
 
 public interface IJsonMessageRepository
 {
-    Task AddJsonMessage(JsonMessage jsonMessage);
+    Task AddJsonMessageAsync(JsonMessage jsonMessage);
 }

@@ -61,7 +61,7 @@ public class InvoiceProcessingService : IInvoiceProcessingService
             RawJson = json,
         };
         
-        await _jsonRepo.AddJsonMessage(jsonMessage);
+        await _jsonRepo.AddJsonMessageAsync(jsonMessage);
 
         return jsonMessage.Id;
     }
